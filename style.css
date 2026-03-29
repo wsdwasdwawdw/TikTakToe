@@ -11,9 +11,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .container table{
+    height: 80%;
     width: 50%;
     aspect-ratio: 1;
     border: 1px solid black;

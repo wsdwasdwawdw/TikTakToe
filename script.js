@@ -1,12 +1,11 @@
 const table = document.querySelector("table");
 const cell = table.querySelectorAll("td");
-
+let computerCounter = 1;
+let playerCounter = 1;
 
 
 let counter = 1;
 cell.forEach(element => {
-    
-
     element.className = `cell${counter}`;
     counter++;
 });
@@ -20,26 +19,61 @@ function computerMove(){
         const cell = document.querySelector(`.cell${random}`);
         if(cell.textContent == "" && !(cell.textContent == "X")){
             cell.textContent = "O";
+            cell.classList.add(`${computerCounter}`);
+            computerCounter++;
+
+            if(computerCounter = 4) {
+                const firstCounter = document.querySelector(".1");
+                firstCounter.style.color = "#665c5c";
+                computerCounter = 1;
+            }
             loop = false;
         }
         counter++;
     }
     console.log(counter);
 }
+let turn = 1;
+let moveQueue = []; // stores last 3 moves
+
 function play() {
-    cell.forEach(element => {
+
+    const tracker = ["first", "second", "third"];
+
+    cell.forEach((element) => {
+
         element.addEventListener("click", () => {
-            // Only allow move if cell is empty
+
             if (element.textContent === "") {
+
+                // Add move
                 element.textContent = "X";
+                const className = tracker[moveQueue.length % 3];
+                element.classList.add(className);
+
+                moveQueue.push(element);
+
                 
-                // If player doesn't win, let computer move
+                // If more than 3 moves → remove oldest
+                if (moveQueue.length > 3) {
+
+                    const oldest = moveQueue.shift();
+
+                    oldest.textContent = "";
+                    oldest.classList.remove("first", "second", "third");
+                }
+
+                console.log(turn);
+
                 if (!checking()) {
-                    computerMove();
-                    checking(); // Check if computer won
+                    //computerMove();
+                    checking();
+                    turn++;
                 }
             }
+
         });
+
     });
 }
 
