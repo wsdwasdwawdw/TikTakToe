@@ -2,11 +2,11 @@ const table = document.querySelector("table");
 const cell = table.querySelectorAll("td");
 let computerCounter = 1;
 let playerCounter = 1;
-
+let won = false;
 
 let counter = 1;
 cell.forEach(element => {
-    element.className = `cell${counter}`;
+    element.className = cell${counter};
     counter++;
 });
 
@@ -16,22 +16,15 @@ function computerMove(){
     let counter = 0;
     while(loop){
         const random = Math.floor(Math.random() * 9) + 1;
-        const cell = document.querySelector(`.cell${random}`);
+        const cell = document.querySelector(.cell${random});
         if(cell.textContent == "" && !(cell.textContent == "X")){
             cell.textContent = "O";
-            cell.classList.add(`${computerCounter}`);
-            computerCounter++;
 
-            if(computerCounter = 4) {
-                const firstCounter = document.querySelector(".1");
-                firstCounter.style.color = "#665c5c";
-                computerCounter = 1;
-            }
             loop = false;
         }
-        counter++;
+                      
     }
-    console.log(counter);
+
 }
 let turn = 1;
 let moveQueue = []; // stores last 3 moves
@@ -86,24 +79,40 @@ function checking() {
     ];
 
     for (let combo of winningCombos) {
-        const cellA = document.querySelector(`.cell${combo[0]}`).textContent;
-        const cellB = document.querySelector(`.cell${combo[1]}`).textContent;
-        const cellC = document.querySelector(`.cell${combo[2]}`).textContent;
+        const cellA = document.querySelector(.cell${combo[0]}).textContent;
+        const cellB = document.querySelector(.cell${combo[1]}).textContent;
+        const cellC = document.querySelector(.cell${combo[2]}).textContent;
 
         // Check if they are all the same and NOT empty
         if (cellA !== "" && cellA === cellB && cellA === cellC) {
-            alert(`${cellA} Wins!`);
+            alert(${cellA} Wins!);
+            won = true;
             return true; // We found a winner
         }
     }
     
     // Optional: Check for a draw
+    /*
     const allCells = Array.from(document.querySelectorAll('td'));
     const isDraw = allCells.every(c => c.textContent !== "");
     if (isDraw) {
         alert("It's a draw!");
         return true;
     }
+    */
 
     return false; // No winner yet
+}
+
+function reset(){
+    if(won){
+        cell.forEach(element =>{
+            element.textContent = "";
+            element.classList.remove("first", "second", "third", "undefined");
+        });
+        won = false;
+    }
+    else{
+        alert("finish the game first!");
+    }
 }
