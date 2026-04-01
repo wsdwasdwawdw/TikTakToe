@@ -1,36 +1,60 @@
 const table = document.querySelector("table");
 const cell = table.querySelectorAll("td");
-let computerCounter = 1;
-let playerCounter = 1;
 let won = false;
 
 let counter = 1;
 cell.forEach(element => {
-    element.className = cell${counter};
+    element.className = `cell${counter}`;
     counter++;
 });
 
 //computerMove();
+let moveQueueComputer = [];
+let moveIndexComputer = 0;
 function computerMove(){
     let loop = true;
-    let counter = 0;
+    const tracker = ["first", "second", "third"];
     while(loop){
         const random = Math.floor(Math.random() * 9) + 1;
-        const cell = document.querySelector(.cell${random});
+        const cell = document.querySelector(`.cell${random}`);
         if(cell.textContent == "" && !(cell.textContent == "X")){
             cell.textContent = "O";
+            // assign class properly
+            cell.classList.remove("first", "second", "third", "grey");
+            const className = tracker[moveIndexComputer % 3];
+            cell.classList.add(className);
+            moveIndexComputer++;
+
+            moveQueueComputer.push(cell);
+
+            // 🔥 if 4 moves → remove oldest
+            if (moveQueueComputer.length > 3) {
+                const removed = moveQueueComputer.shift();
+
+                removed.textContent = "";
+                removed.classList.remove("first", "second", "third", "grey");
+            }
+
+            // 🔥 always reset greys first
+            moveQueueComputer.forEach(cell => cell.classList.remove("grey"));
+
+            // 🔥 if exactly 3 → grey the oldest
+            if (moveQueueComputer.length === 3) {
+                moveQueueComputer[0].classList.add("grey");
+            }
 
             loop = false;
+            
         }
                       
     }
 
 }
-let turn = 1;
-let moveQueue = []; // stores last 3 moves
+let moveQueuePlayer = [];
+let moveIndexPlayer = 0;
 
 function play() {
-
+    
     const tracker = ["first", "second", "third"];
 
     cell.forEach((element) => {
@@ -39,29 +63,36 @@ function play() {
 
             if (element.textContent === "") {
 
-                // Add move
                 element.textContent = "X";
-                const className = tracker[moveQueue.length % 3];
+
+                // assign class properly
+                element.classList.remove("first", "second", "third", "grey");
+                const className = tracker[moveIndexPlayer % 3];
                 element.classList.add(className);
+                moveIndexPlayer++;
 
-                moveQueue.push(element);
+                moveQueuePlayer.push(element);
 
-                
-                // If more than 3 moves → remove oldest
-                if (moveQueue.length > 3) {
+                // 🔥 if 4 moves → remove oldest
+                if (moveQueuePlayer.length > 3) {
+                    const removed = moveQueuePlayer.shift();
 
-                    const oldest = moveQueue.shift();
-
-                    oldest.textContent = "";
-                    oldest.classList.remove("first", "second", "third");
+                    removed.textContent = "";
+                    removed.classList.remove("first", "second", "third", "grey");
                 }
 
-                console.log(turn);
+                // 🔥 always reset greys first
+                moveQueuePlayer.forEach(cell => cell.classList.remove("grey"));
+
+                // 🔥 if exactly 3 → grey the oldest
+                if (moveQueuePlayer.length === 3) {
+                    moveQueuePlayer[0].classList.add("grey");
+                }
+
 
                 if (!checking()) {
-                    //computerMove();
+                    computerMove();
                     checking();
-                    turn++;
                 }
             }
 
@@ -79,13 +110,17 @@ function checking() {
     ];
 
     for (let combo of winningCombos) {
-        const cellA = document.querySelector(.cell${combo[0]}).textContent;
-        const cellB = document.querySelector(.cell${combo[1]}).textContent;
-        const cellC = document.querySelector(.cell${combo[2]}).textContent;
+        const cellA = document.querySelector(`.cell${combo[0]}`).textContent;
+        const cellB = document.querySelector(`.cell${combo[1]}`).textContent;
+        const cellC = document.querySelector(`.cell${combo[2]}`).textContent;
 
         // Check if they are all the same and NOT empty
         if (cellA !== "" && cellA === cellB && cellA === cellC) {
-            alert(${cellA} Wins!);
+            alert(`${cellA} Wins!`);
+            cell.forEach(element =>{
+                element.classList.remove("first", "second", "third", "grey");
+            });
+            table.classList.add("disable");
             won = true;
             return true; // We found a winner
         }
@@ -108,9 +143,11 @@ function reset(){
     if(won){
         cell.forEach(element =>{
             element.textContent = "";
-            element.classList.remove("first", "second", "third", "undefined");
         });
+        table.classList.remove("disable");
         won = false;
+        moveIndexPlayer = 0;
+        moveQueuePlayer = [];
     }
     else{
         alert("finish the game first!");
