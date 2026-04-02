@@ -1,5 +1,6 @@
 const table = document.querySelector("table");
 const cell = table.querySelectorAll("td");
+const menu = document.querySelector(".menu");
 let won = false;
 
 let counter = 1;
@@ -116,26 +117,17 @@ function checking() {
 
         // Check if they are all the same and NOT empty
         if (cellA !== "" && cellA === cellB && cellA === cellC) {
-            alert(`${cellA} Wins!`);
+            //alert(`${cellA} Wins!`);
             cell.forEach(element =>{
                 element.classList.remove("first", "second", "third", "grey");
             });
             table.classList.add("disable");
+            menu.classList.remove("hide");
+            menu.querySelector("p").textContent = `${cellA} Wins!`;
             won = true;
             return true; // We found a winner
         }
     }
-    
-    // Optional: Check for a draw
-    /*
-    const allCells = Array.from(document.querySelectorAll('td'));
-    const isDraw = allCells.every(c => c.textContent !== "");
-    if (isDraw) {
-        alert("It's a draw!");
-        return true;
-    }
-    */
-
     return false; // No winner yet
 }
 
@@ -145,11 +137,21 @@ function reset(){
             element.textContent = "";
         });
         table.classList.remove("disable");
+        menu.classList.add("hide");
         won = false;
         moveIndexPlayer = 0;
         moveQueuePlayer = [];
+        moveIndexComputer = 0;
+        moveQueueComputer = [];
     }
     else{
         alert("finish the game first!");
     }
+}
+
+function Computer(){
+    const container = document.querySelector(".container");
+    const mainMenu = document.querySelector(".mainMenu");
+    container.classList.remove("hide");
+    mainMenu.classList.add("hide");
 }

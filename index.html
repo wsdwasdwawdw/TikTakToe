@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,23 @@
     <title>Tik Tak Toe</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <section class="container">
-        <button onclick="reset()">Reset</button>
-        
+    <section class="mainMenu">
+        <div>
+            <h1>Tik Tak Toe</h1>
+            <button onclick="Computer()">VS Computer</button>
+            <button onclick="Player()">VS Player</button>
+        </div>
+    </section>
+
+    <section class="container hide">
+        <div class="menu hide">
+            <p></p>
+            <button onclick="reset()">Reset</button>
+            <button onclick="exit()">Exit</button>
+            <button onclick="continuee()">Continue</button>
+        </div>
         <table>
             <tr>
                 <td></td>
@@ -31,4 +45,5 @@
     </section>
     <script src="script.js"></script>
 </body>
+
 </html>
