@@ -1,6 +1,8 @@
 const table = document.querySelector("table");
 const cell = table.querySelectorAll("td");
 const menu = document.querySelector(".menu");
+let playerWins = 0;
+let computerWins = 0;
 let won = false;
 
 let counter = 1;
@@ -31,7 +33,6 @@ function computerMove(){
             // 🔥 if 4 moves → remove oldest
             if (moveQueueComputer.length > 3) {
                 const removed = moveQueueComputer.shift();
-
                 removed.textContent = "";
                 removed.classList.remove("first", "second", "third", "grey");
             }
@@ -77,7 +78,6 @@ function play() {
                 // 🔥 if 4 moves → remove oldest
                 if (moveQueuePlayer.length > 3) {
                     const removed = moveQueuePlayer.shift();
-
                     removed.textContent = "";
                     removed.classList.remove("first", "second", "third", "grey");
                 }
@@ -104,6 +104,7 @@ function play() {
 
 play(); // Just call it once to set up listeners
 function checking() {
+    const scores = document.querySelector(".scores h1");
     const winningCombos = [
         [1, 2, 3], [4, 5, 6], [7, 8, 9], // Rows
         [1, 4, 7], [2, 5, 8], [3, 6, 9], // Columns
@@ -111,26 +112,46 @@ function checking() {
     ];
 
     for (let combo of winningCombos) {
+        
         const cellA = document.querySelector(`.cell${combo[0]}`).textContent;
         const cellB = document.querySelector(`.cell${combo[1]}`).textContent;
         const cellC = document.querySelector(`.cell${combo[2]}`).textContent;
 
-        // Check if they are all the same and NOT empty
+        
         if (cellA !== "" && cellA === cellB && cellA === cellC) {
-            //alert(`${cellA} Wins!`);
-            cell.forEach(element =>{
+            table.classList.add("disable");
+            cell.forEach(element =>{    
                 element.classList.remove("first", "second", "third", "grey");
             });
-            table.classList.add("disable");
-            menu.classList.remove("hide");
-            menu.querySelector("p").textContent = `${cellA} Wins!`;
-            won = true;
-            return true; // We found a winner
+
+            
+
+            let interval = setTimeout(() => {
+                menu.classList.remove("hide");
+                menu.querySelector("h1").textContent = `${cellA} Wins!`;
+                
+
+                if(cellA === "X"){
+                    playerWins++;
+                }
+                else if(cellA === "O"){
+                    computerWins++;
+                }
+
+                scores.textContent = `Player: ${playerWins} Computer: ${computerWins}`;
+
+                console.log(playerWins, computerWins);
+                won = true;
+                
+            }, 2000);
+            return true;
         }
     }
-    return false; // No winner yet
+    
+    return false; 
 }
 
+//MENU BUTTONS
 function reset(){
     if(won){
         cell.forEach(element =>{
@@ -148,9 +169,19 @@ function reset(){
         alert("finish the game first!");
     }
 }
-
+function exit(){
+    const container = document.querySelector(".vsComputer");
+    const mainMenu = document.querySelector(".mainMenu");
+    container.classList.add("hide");
+    mainMenu.classList.remove("hide");
+    reset();
+}
+function continuee(){
+    menu.classList.add("hide");
+    reset();
+}
 function Computer(){
-    const container = document.querySelector(".container");
+    const container = document.querySelector(".vsComputer");
     const mainMenu = document.querySelector(".mainMenu");
     container.classList.remove("hide");
     mainMenu.classList.add("hide");

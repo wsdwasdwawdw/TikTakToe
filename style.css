@@ -27,7 +27,7 @@ body{
     gap: 10px;
 }
 
-.container{
+.vsComputer{
     height: 100vh;
     width: 100%;
     border: solid 1px #000;
@@ -39,34 +39,30 @@ body{
     gap: 20px;
     padding: 20px;
 }
-.container button{
+.vsComputer button{
     padding: 10px;
     
 }
-.container table{
+.vsComputer table{
     border: 1px solid black;
     text-align: center;
     border-collapse: collapse;
     font-size: 64px;
 }
 
-.container table tr{
+.vsComputer table tr{
     border: 1px solid #000;
 }
-.container table tr td{
+.vsComputer table tr td{
     width: 200px;
     height: 200px;
     border: 1px solid #000;
     cursor: pointer;
 }
-.grey {
-    color: lightgray;
-    opacity: 0.6;
-}
-
-.disable{
-    pointer-events: none;
-    cursor: not-allowed;
+.vsComputer table thead{
+    display: flex;
+    gap: 200px;
+    border: solid 1px #000;
 }
 .menu{
     background-color: #fff;
@@ -86,4 +82,13 @@ body{
 }
 .hide{
     display: none;
+}
+.grey {
+    color: lightgray;
+    opacity: 0.6;
+}
+
+.disable{
+    pointer-events: none;
+    cursor: not-allowed;
 }
