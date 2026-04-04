@@ -27,7 +27,7 @@ body{
     gap: 10px;
 }
 
-.vsComputer{
+.vsComputer, .vsPlayer{
     height: 100vh;
     width: 100%;
     border: solid 1px #000;
@@ -39,27 +39,26 @@ body{
     gap: 20px;
     padding: 20px;
 }
-.vsComputer button{
+.menu button{
     padding: 10px;
-    
 }
-.vsComputer table{
+table{
     border: 1px solid black;
     text-align: center;
     border-collapse: collapse;
     font-size: 64px;
 }
 
-.vsComputer table tr{
+table tr{
     border: 1px solid #000;
 }
-.vsComputer table tr td{
+table tr td{
     width: 200px;
     height: 200px;
     border: 1px solid #000;
     cursor: pointer;
 }
-.vsComputer table thead{
+table thead{
     display: flex;
     gap: 200px;
     border: solid 1px #000;

@@ -13,17 +13,17 @@
     <section class="mainMenu">
         <div>
             <h1>Tik Tak Toe</h1>
-            <button onclick="Computer()">VS Computer</button>
-            <button onclick="Player()">VS Player</button>
+            <button class="computer">VS Computer</button>
+            <button class="player">VS Player</button>
         </div>
     </section>
 
     <section class="vsComputer hide">
         <div class="menu hide">
             <h1></h1>
-            <button onclick="reset()">Reset</button>
-            <button onclick="exit()">Exit</button>
-            <button onclick="continuee()">Continue</button>
+            <button class="reset">Reset</button>
+            <button class="exit">Exit</button>
+            <button class="continue">Continue</button>
         </div>
         <div class="scores">
             <h1>Player: 0 Computer: 0</h1>
@@ -46,7 +46,39 @@
             </tr>
         </table>
     </section>
+
+    <section class="vsPlayer hide">
+        <div class="menu hide">
+            <h1></h1>
+            <button onclick="reset('reset')">Reset</button>
+            <button onclick="exit()">Exit</button>
+            <button onclick="continuee()">Continue</button>
+        </div>
+        <div class="scores">
+            <h1>P1: 0 P2: 0</h1>
+        </div>
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </section>
+    <script src="player.js"></script>
     <script src="script.js"></script>
+
+
 </body>
 
 </html>
