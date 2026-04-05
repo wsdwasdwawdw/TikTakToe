@@ -189,12 +189,14 @@
         }
     }
 
-    const playerBtn = document.querySelector(".computer");
-    playerBtn.addEventListener("click", ()=>{
-        const container = document.querySelector(".vsComputer");
-        const mainMenu = document.querySelector(".mainMenu");
-        container.classList.remove("hide");
+    const computerBtn = document.querySelector(".computer");
+    computerBtn.addEventListener("click", ()=>{
+        vsComputer.classList.remove("hide");
         mainMenu.classList.add("hide");
     });
         
+    const backBtn = vsComputer.querySelector(".back");
+    backBtn.addEventListener("click", ()=>{
+        reset("exit");
+     });
 })();

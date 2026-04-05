@@ -1,8 +1,10 @@
 (function player() {
+    const mainMenu = document.querySelector(".mainMenu");
     const vsPlayer = document.querySelector(".vsPlayer");
     const table = vsPlayer.querySelector("table");
     const cell = table.querySelectorAll("td");
     const menu = vsPlayer.querySelector(".menu");
+   
     let player1Wins = 0;
     let player2Wins = 0;
 
@@ -12,59 +14,78 @@
         counter++;
     });
 
-    //computerMove();
-    let moveQueuePlayer1 = [];
+    let isPlayer1Turn = true;
     let moveIndexPlayer1 = 0;
-    let moveQueuePlayer2 = [];
+    let moveQueuePlayer1 = [];
     let moveIndexPlayer2 = 0;
+    let moveQueuePlayer2 = [];
 
-    function play() {
-        
+    function setupMoves() {
         const tracker = ["first", "second", "third"];
-
         cell.forEach((element) => {
-
             element.addEventListener("click", () => {
+                if (element.textContent === "" && !table.classList.contains("disable")) {
+                    if (isPlayer1Turn) {
+                        element.textContent = "X";
+                        // assign class properly
+                        element.classList.remove("first", "second", "third", "grey");
+                        const className = tracker[moveIndexPlayer1 % 3];
+                        element.classList.add(className);
+                        moveIndexPlayer1++;
 
-                if (element.textContent === "") {
+                        moveQueuePlayer1.push(element);
 
-                    element.textContent = "X";
+                        // 🔥 if 4 moves → remove oldest
+                        if (moveQueuePlayer1.length > 3) {
+                            const removed = moveQueuePlayer1.shift();
+                            removed.textContent = "";
+                            removed.classList.remove("first", "second", "third", "grey");
+                        }
 
-                    // assign class properly
-                    element.classList.remove("first", "second", "third", "grey");
-                    const className = tracker[moveIndexPlayer % 3];
-                    element.classList.add(className);
-                    moveIndexPlayer++;
+                        // 🔥 always reset greys first
+                        moveQueuePlayer1.forEach(cell => cell.classList.remove("grey"));
 
-                    moveQueuePlayer.push(element);
+                        // 🔥 if exactly 3 → grey the oldest
+                        if (moveQueuePlayer1.length === 3) {
+                            moveQueuePlayer1[0].classList.add("grey");
+                        }
 
-                    // 🔥 if 4 moves → remove oldest
-                    if (moveQueuePlayer.length > 3) {
-                        const removed = moveQueuePlayer.shift();
-                        removed.textContent = "";
-                        removed.classList.remove("first", "second", "third", "grey");
+                        isPlayer1Turn = false;
+                    } else {
+                        element.textContent = "O";
+                        // assign class properly
+                        element.classList.remove("first", "second", "third", "grey");
+                        const className = tracker[moveIndexPlayer2 % 3];
+                        element.classList.add(className);
+                        moveIndexPlayer2++;
+
+                        moveQueuePlayer2.push(element);
+
+                        // 🔥 if 4 moves → remove oldest
+                        if (moveQueuePlayer2.length > 3) {
+                            const removed = moveQueuePlayer2.shift();
+                            removed.textContent = "";
+                            removed.classList.remove("first", "second", "third", "grey");
+                        }
+
+                        // 🔥 always reset greys first
+                        moveQueuePlayer2.forEach(cell => cell.classList.remove("grey"));
+
+                        // 🔥 if exactly 3 → grey the oldest
+                        if (moveQueuePlayer2.length === 3) {
+                            moveQueuePlayer2[0].classList.add("grey");
+                        }
+
+                        isPlayer1Turn = true;
                     }
 
-                    // 🔥 always reset greys first
-                    moveQueuePlayer.forEach(cell => cell.classList.remove("grey"));
-
-                    // 🔥 if exactly 3 → grey the oldest
-                    if (moveQueuePlayer.length === 3) {
-                        moveQueuePlayer[0].classList.add("grey");
-                    }
-
-                    if (!checking()) {
-                        computerMove();
-                        checking();
-                    }
+                    checking();
                 }
-
             });
-
         });
     }
 
-    play(); // Just call it once to set up listeners
+    setupMoves();
     function checking() {
         const scores = vsPlayer.querySelector(".scores h1");
         const winningCombos = [
@@ -97,15 +118,11 @@
                     }
 
                     scores.textContent = `Player 1: ${player1Wins} Player 2: ${player2Wins}`;
-
-                    console.log(player1Wins, player2Wins);
-                    won = true;
                     
                 }, 2000);
                 return true;
             }
         }
-        
         return false; 
     }
 
@@ -113,6 +130,16 @@
     const resetBtn = menu.querySelector(".reset");
     const exitBtn = menu.querySelector(".exit");
     const continueBtn = menu.querySelector(".continue");
+    resetBtn.addEventListener("click", () => {
+        reset("reset");
+    });
+    exitBtn.addEventListener("click", () => {
+        reset("exit");
+    });
+    continueBtn.addEventListener("click", () => {
+        reset("continue");
+    });
+
     function reset(yeh){
         const scores = vsPlayer.querySelector(".scores h1");
         cell.forEach(element =>{
@@ -120,35 +147,34 @@
         });
         table.classList.remove("disable");
         menu.classList.add("hide");
-        moveIndexPlayer = 0;
-        moveQueuePlayer = [];
-        moveIndexComputer = 0;
-        moveQueueComputer = [];
+        moveIndexPlayer1 = 0;
+        moveQueuePlayer1 = [];
+        moveIndexPlayer2 = 0;
+        moveQueuePlayer2 = [];
 
-        if(yeh === "exit" || yeh === "reset"){
-            playerWins = 0;
-            computerWins = 0;
-            scores.textContent = `Player: 0 Computer: 0`;
+        if(yeh === "reset"){
+            player1Wins = 0;
+            player2Wins = 0;
+            scores.textContent = `Player 1: 0 Player 2: 0`;
         }
-    }
-    function exit(){
-        const container = document.querySelector(".vsPlayer");
-        const mainMenu = container.querySelector(".mainMenu");
-        container.classList.add("hide");
-        mainMenu.classList.remove("hide");
-        reset("exit");
-    }
-    function continuee(){
-        menu.classList.add("hide");
-        reset();
+        else if(yeh === "exit"){
+            player1Wins = 0;
+            player2Wins = 0;
+            scores.textContent = `Player 1: 0 Player 2: 0`;
+            vsPlayer.classList.add("hide");
+            mainMenu.classList.remove("hide");
+        }
     }
 
     const playerBtn = document.querySelector(".player");
     playerBtn.addEventListener("click", ()=>{
-        const container = document.querySelector(".vsPlayer");
-        const mainMenu = document.querySelector(".mainMenu");
-        container.classList.remove("hide");
+        vsPlayer.classList.remove("hide");
         mainMenu.classList.add("hide");
     });
-})();
 
+
+    const backBtn = vsPlayer.querySelector(".back");
+    backBtn.addEventListener("click", ()=>{
+        reset("exit");
+     });
+})();
