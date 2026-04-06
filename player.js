@@ -4,7 +4,10 @@
     const table = vsPlayer.querySelector("table");
     const cell = table.querySelectorAll("td");
     const menu = vsPlayer.querySelector(".menu");
-   
+    const scores = vsPlayer.querySelector(".scores h1");
+    const playerSettings = vsPlayer.querySelector(".playerSettings");
+    const container = vsPlayer.querySelector(".container");
+
     let player1Wins = 0;
     let player2Wins = 0;
 
@@ -20,7 +23,7 @@
     let moveIndexPlayer2 = 0;
     let moveQueuePlayer2 = [];
 
-    function setupMoves() {
+    function setupMoves(name1, name2) {
         const tracker = ["first", "second", "third"];
         cell.forEach((element) => {
             element.addEventListener("click", () => {
@@ -85,7 +88,7 @@
         });
     }
 
-    setupMoves();
+    
     function checking() {
         const scores = vsPlayer.querySelector(".scores h1");
         const winningCombos = [
@@ -117,7 +120,7 @@
                         player2Wins++;
                     }
 
-                    scores.textContent = `Player 1: ${player1Wins} Player 2: ${player2Wins}`;
+                    scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
                     
                 }, 2000);
                 return true;
@@ -141,7 +144,6 @@
     });
 
     function reset(yeh){
-        const scores = vsPlayer.querySelector(".scores h1");
         cell.forEach(element =>{
             element.textContent = "";
         });
@@ -161,17 +163,34 @@
             player1Wins = 0;
             player2Wins = 0;
             scores.textContent = `Player 1: 0 Player 2: 0`;
+            playerSettings.classList.remove("hide");
             vsPlayer.classList.add("hide");
             mainMenu.classList.remove("hide");
+            container.classList.add("hide");
+            playerSettings.querySelector("#player1").value = "";
+            playerSettings.querySelector("#player2").value = "";
+            
+
         }
     }
 
-    const playerBtn = document.querySelector(".player");
-    playerBtn.addEventListener("click", ()=>{
-        vsPlayer.classList.remove("hide");
-        mainMenu.classList.add("hide");
+    //START GAME BUTTON
+    const startBtn = playerSettings.querySelector(".start"); 
+    startBtn.addEventListener("click", ()=>{
+        playerSettings.classList.add("hide");
+        let player1name = playerSettings.querySelector("#player1").value;
+        let player2name = playerSettings.querySelector("#player2").value;
+        console.log(player1name, player2name);
+        setupMoves(player1name, player2name);
+        container.classList.remove("hide");
+        scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
     });
 
+    const playerBtn = document.querySelector(".player");
+    playerBtn.addEventListener("click", ()=>{
+        mainMenu.classList.add("hide");
+        vsPlayer.classList.remove("hide");
+    });
 
     const backBtn = vsPlayer.querySelector(".back");
     backBtn.addEventListener("click", ()=>{

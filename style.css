@@ -40,6 +40,20 @@ section{
     gap: 20px;
     padding: 20px;
 }
+.vsPlayer .playerSettings{
+    width: 300px;
+    height: 300px;
+    border: solid 1px #000;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.vsPlayer .playerSettings.hide{
+    display: none;
+}
 .menu button{
     padding: 10px;
 }
