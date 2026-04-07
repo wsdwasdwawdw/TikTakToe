@@ -41,6 +41,7 @@ section{
     padding: 20px;
 }
 .vsPlayer .playerSettings{
+    position: absolute;
     width: 300px;
     height: 300px;
     border: solid 1px #000;
@@ -53,6 +54,14 @@ section{
 }
 .vsPlayer .playerSettings.hide{
     display: none;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 .menu button{
     padding: 10px;
@@ -78,6 +87,7 @@ table thead{
     gap: 200px;
     border: solid 1px #000;
 }
+
 .menu{
     background-color: #fff;
     height: 300px;

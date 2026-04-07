@@ -10,6 +10,9 @@
 
     let player1Wins = 0;
     let player2Wins = 0;
+    let player1name = "";
+    let player2name = "";
+
 
     let counter = 1;
     cell.forEach(element => {
@@ -140,7 +143,7 @@
         reset("exit");
     });
     continueBtn.addEventListener("click", () => {
-        reset("continue");
+        reset();
     });
 
     function reset(yeh){
@@ -157,20 +160,19 @@
         if(yeh === "reset"){
             player1Wins = 0;
             player2Wins = 0;
-            scores.textContent = `Player 1: 0 Player 2: 0`;
+            scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
+            isPlayer1Turn = true;
         }
         else if(yeh === "exit"){
+            isPlayer1Turn = true;
             player1Wins = 0;
             player2Wins = 0;
-            scores.textContent = `Player 1: 0 Player 2: 0`;
             playerSettings.classList.remove("hide");
             vsPlayer.classList.add("hide");
             mainMenu.classList.remove("hide");
             container.classList.add("hide");
             playerSettings.querySelector("#player1").value = "";
             playerSettings.querySelector("#player2").value = "";
-            
-
         }
     }
 
@@ -178,8 +180,8 @@
     const startBtn = playerSettings.querySelector(".start"); 
     startBtn.addEventListener("click", ()=>{
         playerSettings.classList.add("hide");
-        let player1name = playerSettings.querySelector("#player1").value;
-        let player2name = playerSettings.querySelector("#player2").value;
+        player1name = playerSettings.querySelector("#player1").value;
+        player2name = playerSettings.querySelector("#player2").value;
         console.log(player1name, player2name);
         setupMoves(player1name, player2name);
         container.classList.remove("hide");
