@@ -21,43 +21,119 @@
     //computerMove();
     let moveQueueComputer = [];
     let moveIndexComputer = 0;
-    function computerMove(){
-        let loop = true;
-        const tracker = ["first", "second", "third"];
-        while(loop){
-            const random = Math.floor(Math.random() * 9) + 1;
-            const cell = document.querySelector(`.cell${random}`);
-            if(cell.textContent == "" && !(cell.textContent == "X")){
-                cell.textContent = "O";
-                // assign class properly
-                cell.classList.remove("first", "second", "third", "grey");
-                const className = tracker[moveIndexComputer % 3];
-                cell.classList.add(className, "o-mark");
-                moveIndexComputer++;
 
-                moveQueueComputer.push(cell);
-
-                // 🔥 if 4 moves → remove oldest
-                if (moveQueueComputer.length > 3) {
-                    const removed = moveQueueComputer.shift();
-                    removed.textContent = "";
-                    removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
-                }
-
-                // 🔥 always reset greys first
-                moveQueueComputer.forEach(cell => cell.classList.remove("grey"));
-
-                // 🔥 if exactly 3 → grey the oldest
-                if (moveQueueComputer.length === 3) {
-                    moveQueueComputer[0].classList.add("grey");
-                }
-                table.classList.remove("disable");
-                loop = false;
-                
+    // Helper function to get all available moves
+    function getAvailableMoves() {
+        const available = [];
+        for (let i = 1; i <= 9; i++) {
+            const cell = document.querySelector(`.cell${i}`);
+            if (cell.textContent === "") {
+                available.push(i);
             }
-                        
+        }
+        return available;
+    }
+
+    // Helper function to check if a move would win for a given symbol
+    function wouldWin(cellNumber, symbol) {
+        const winningCombos = [
+            [1, 2, 3], [4, 5, 6], [7, 8, 9], // Rows
+            [1, 4, 7], [2, 5, 8], [3, 6, 9], // Columns
+            [1, 5, 9], [3, 5, 7]             // Diagonals
+        ];
+
+        // Temporarily set the cell content
+        const cell = document.querySelector(`.cell${cellNumber}`);
+        const originalContent = cell.textContent;
+        cell.textContent = symbol;
+
+        let wouldWin = false;
+        for (let combo of winningCombos) {
+            const cellA = document.querySelector(`.cell${combo[0]}`).textContent;
+            const cellB = document.querySelector(`.cell${combo[1]}`).textContent;
+            const cellC = document.querySelector(`.cell${combo[2]}`).textContent;
+
+            if (cellA !== "" && cellA === cellB && cellA === cellC) {
+                wouldWin = true;
+                break;
+            }
         }
 
+        // Restore original content
+        cell.textContent = originalContent;
+        return wouldWin;
+    }
+
+    function computerMove(){
+        const tracker = ["first", "second", "third"];
+        const availableMoves = getAvailableMoves();
+
+        if (availableMoves.length === 0) return;
+
+        let chosenMove = null;
+
+        // 1. Check if computer can win in next move
+        for (let move of availableMoves) {
+            if (wouldWin(move, "O")) {
+                chosenMove = move;
+                break;
+            }
+        }
+
+        // 2. Check if computer needs to block player's winning move
+        if (!chosenMove) {
+            for (let move of availableMoves) {
+                if (wouldWin(move, "X")) {
+                    chosenMove = move;
+                    break;
+                }
+            }
+        }
+
+        // 3. Strategic moves: center, then corners, then edges
+        if (!chosenMove) {
+            const strategicMoves = [5, 1, 3, 7, 9, 2, 4, 6, 8]; // Center first, then corners, then edges
+            for (let move of strategicMoves) {
+                if (availableMoves.includes(move)) {
+                    chosenMove = move;
+                    break;
+                }
+            }
+        }
+
+        // 4. Fallback to random (shouldn't happen with above logic)
+        if (!chosenMove) {
+            chosenMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+        }
+
+        // Make the move
+        const cell = document.querySelector(`.cell${chosenMove}`);
+        cell.textContent = "O";
+
+        // assign class properly
+        cell.classList.remove("first", "second", "third", "grey");
+        const className = tracker[moveIndexComputer % 3];
+        cell.classList.add(className, "o-mark");
+        moveIndexComputer++;
+
+        moveQueueComputer.push(cell);
+
+        // 🔥 if 4 moves → remove oldest
+        if (moveQueueComputer.length > 3) {
+            const removed = moveQueueComputer.shift();
+            removed.textContent = "";
+            removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
+        }
+
+        // 🔥 always reset greys first
+        moveQueueComputer.forEach(cell => cell.classList.remove("grey"));
+
+        // 🔥 if exactly 3 → grey the oldest
+        if (moveQueueComputer.length === 3) {
+            moveQueueComputer[0].classList.add("grey");
+        }
+
+        table.classList.remove("disable");
     }
     let moveQueuePlayer = [];
     let moveIndexPlayer = 0;
@@ -100,8 +176,8 @@
                     if (!checking()) {
                         setTimeout(() => {
                             computerMove();
+                            checking();
                         }, 1000);
-                        checking();
                     }
                 }
 
@@ -122,8 +198,16 @@
         for (let combo of winningCombos) {
             
             const cellA = document.querySelector(`.cell${combo[0]}`).textContent;
+            const cellAElement = document.querySelector(`.cell${combo[0]}`);
+
             const cellB = document.querySelector(`.cell${combo[1]}`).textContent;
+            const cellBElement = document.querySelector(`.cell${combo[1]}`);
+            
             const cellC = document.querySelector(`.cell${combo[2]}`).textContent;
+            const cellCElement = document.querySelector(`.cell${combo[2]}`);
+
+
+            
 
             if (cellA !== "" && cellA === cellB && cellA === cellC) {
                 table.classList.add("disable");
@@ -131,8 +215,12 @@
                     element.classList.remove("grey");
                 });
 
+                cellAElement.style.fontSize = "64px";
+                cellBElement.style.fontSize = "64px";
+                cellCElement.style.fontSize = "64px";
+
                 let interval = setTimeout(() => {
-                    menu.classList.remove("hide");
+                    //menu.classList.remove("hide");
                     menu.querySelector("h1").textContent = `${cellA} Wins!`;
                     
                     if(cellA === "X"){
@@ -146,19 +234,23 @@
 
                     scores.textContent = `Player: ${playerWins} Computer: ${computerWins}`;
 
+                    cellAElement.style.fontSize = "";
+                    cellBElement.style.fontSize = "";
+                    cellCElement.style.fontSize = "";
                     console.log(playerWins, computerWins);
                     won = true;
-                    
+                    reset();
                 }, 2000);
                 return true;
             }
+            
         }
         
         return false; 
     }
 
     //MENU BUTTONS
-    const resetBtn = menu.querySelector(".reset");
+    const resetBtn = vsComputer.querySelector(".reset");
     const exitBtn = menu.querySelector(".exit");
     const continueBtn = menu.querySelector(".continue");
     resetBtn.addEventListener("click", () => {

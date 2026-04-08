@@ -29,18 +29,36 @@ section{
 
 .mainMenu{
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
     width: 300px;
     height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 1px yellow;
     display: flex;
     flex-direction: column;
     padding: 10px;
     gap: 10px;
 }
-
+button{
+    background: transparent;
+    padding: 10px 20px;
+    border: 1px solid var(--cyan-glow);
+    border-radius: 10px;
+    color: var(--cyan-glow); 
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); 
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+button:hover{
+    background: var(--cyan-glow);
+    color: #0b0e14;
+    border-color: var(--cyan-glow);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    transform: translateY(-2px);
+}
 table{
     border: none;
     text-align: center;
