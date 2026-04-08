@@ -4,6 +4,10 @@
     const table = vsComputer.querySelector("table");
     const cell = table.querySelectorAll("td");
     const menu = vsComputer.querySelector(".menu");
+    const scoreBoard = vsComputer.querySelector(".scoreBoard");
+    const playerScore = scoreBoard.querySelector(".playerScore .score1");
+    const computerScore = scoreBoard.querySelector(".computerScore .score2");
+
     let playerWins = 0;
     let computerWins = 0;
     let won = false;
@@ -28,7 +32,7 @@
                 // assign class properly
                 cell.classList.remove("first", "second", "third", "grey");
                 const className = tracker[moveIndexComputer % 3];
-                cell.classList.add(className);
+                cell.classList.add(className, "o-mark");
                 moveIndexComputer++;
 
                 moveQueueComputer.push(cell);
@@ -37,7 +41,7 @@
                 if (moveQueueComputer.length > 3) {
                     const removed = moveQueueComputer.shift();
                     removed.textContent = "";
-                    removed.classList.remove("first", "second", "third", "grey");
+                    removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
                 }
 
                 // 🔥 always reset greys first
@@ -47,7 +51,7 @@
                 if (moveQueueComputer.length === 3) {
                     moveQueueComputer[0].classList.add("grey");
                 }
-
+                table.classList.remove("disable");
                 loop = false;
                 
             }
@@ -73,7 +77,7 @@
                     // assign class properly
                     element.classList.remove("first", "second", "third", "grey");
                     const className = tracker[moveIndexPlayer % 3];
-                    element.classList.add(className);
+                    element.classList.add(className, "x-mark");
                     moveIndexPlayer++;
 
                     moveQueuePlayer.push(element);
@@ -82,7 +86,7 @@
                     if (moveQueuePlayer.length > 3) {
                         const removed = moveQueuePlayer.shift();
                         removed.textContent = "";
-                        removed.classList.remove("first", "second", "third", "grey");
+                        removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
                     }
 
                     // 🔥 always reset greys first
@@ -92,9 +96,11 @@
                     if (moveQueuePlayer.length === 3) {
                         moveQueuePlayer[0].classList.add("grey");
                     }
-
+                    table.classList.add("disable");
                     if (!checking()) {
-                        computerMove();
+                        setTimeout(() => {
+                            computerMove();
+                        }, 1000);
                         checking();
                     }
                 }
@@ -122,7 +128,7 @@
             if (cellA !== "" && cellA === cellB && cellA === cellC) {
                 table.classList.add("disable");
                 cell.forEach(element =>{    
-                    element.classList.remove("first", "second", "third", "grey");
+                    element.classList.remove("grey");
                 });
 
                 let interval = setTimeout(() => {
@@ -131,9 +137,11 @@
                     
                     if(cellA === "X"){
                         playerWins++;
+                        playerScore.textContent = playerWins;
                     }
                     else if(cellA === "O"){
                         computerWins++;
+                        computerScore.textContent = computerWins;
                     }
 
                     scores.textContent = `Player: ${playerWins} Computer: ${computerWins}`;
@@ -166,6 +174,7 @@
     function reset(yeh){
         const scores = document.querySelector(".scores h1");
         cell.forEach(element =>{
+            element.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
             element.textContent = "";
         });
         table.classList.remove("disable");
@@ -178,12 +187,14 @@
         if(yeh === "reset"){
             playerWins = 0;
             computerWins = 0;
-            scores.textContent = `Player: 0 Computer: 0`;
+            playerScore.textContent = playerWins;
+            computerScore.textContent = computerWins;
         }
         else if(yeh === "exit"){
             playerWins = 0;
             computerWins = 0;
-            scores.textContent = `Player: 0 Computer: 0`;
+            playerScore.textContent = playerWins;
+            computerScore.textContent = computerWins;
             vsComputer.classList.add("hide");
             mainMenu.classList.remove("hide");
         }
@@ -193,10 +204,24 @@
     computerBtn.addEventListener("click", ()=>{
         vsComputer.classList.remove("hide");
         mainMenu.classList.add("hide");
+        //hoverEvents();
     });
         
     const backBtn = vsComputer.querySelector(".back");
     backBtn.addEventListener("click", ()=>{
         reset("exit");
      });
+
+    function hoverEvents(){
+        cell.forEach(element => {
+            element.setAttribute("data-preview", "O");
+            element.addEventListener("mouseenter", () => {
+                element.classList.add("hover-preview");
+            });
+
+            element.addEventListener("mouseleave", () => {
+                element.classList.remove("hover-preview");
+            });
+        });
+    }
 })();

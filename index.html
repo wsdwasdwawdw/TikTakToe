@@ -6,50 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tik Tak Toe</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Styles/Main.css">
+    <link rel="stylesheet" href="Styles/Computer.css">
+    <link rel="stylesheet" href="Styles/style.css">
 </head>
 
 <body>
-    <section class="mainMenu">
-        <div>
-            <h1>Tik Tak Toe</h1>
-            <button class="computer">VS Computer</button>
-            <button class="player">VS Player</button>
-        </div>
-    </section>
+    <div class="mainMenu">
+        <h1>Tik Tak Toe</h1>
+        <button class="computer">VS Computer</button>
+        <button class="player">VS Player</button>
+    </div>
 
     <section class="vsComputer hide">
         <p class="back">←</p>
-        <div class="menu hide">
-            <h1></h1>
-            <button class="reset">Restart</button>
-            <button class="exit">Exit</button>
-            <button class="continue">Continue</button>
+        <div class="container">
+            <div class="menu hide">
+                <h1></h1>
+                <button class="reset">Restart</button>
+                <button class="exit">Exit</button>
+                <button class="continue">Continue</button>
+            </div>
+            <h1>Tic Tac Toe</h1>
+
+            <div class="scoreBoard">
+                <div class="playerScore">
+                    <span>You:</span>
+                    <span class="score1">0</span>
+                </div>
+                <div class="computerScore">
+                    <span>Computer:</span>
+                    <span class="score2">0</span>
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
-        <div class="scores">
-            <h1>Player: 0 Computer: 0</h1>
-        </div>
-        <table>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+
     </section>
 
-    <div class="vsPlayer hide">
-
+    <section class="vsPlayer hide">
+        <p class="back">←</p>
         <div class="playerSettings">
             <h1>Player Settings</h1>
             <label for="player1">Player 1 Name:</label>
@@ -60,7 +72,6 @@
         </div>
 
         <div class="container hide">
-            <p class="back">←</p>
             <div class="menu hide">
                 <h1></h1>
                 <button class="reset">Restart</button>
@@ -89,9 +100,9 @@
             </table>
         </div>
 
-        </section>
-        <script src="player.js"></script>
-        <script src="script.js"></script>
+    </section>
+    <script src="player.js"></script>
+    <script src="script.js"></script>
 
 
 </body>

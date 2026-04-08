@@ -4,9 +4,9 @@
     const table = vsPlayer.querySelector("table");
     const cell = table.querySelectorAll("td");
     const menu = vsPlayer.querySelector(".menu");
-    const scores = vsPlayer.querySelector(".scores h1");
     const playerSettings = vsPlayer.querySelector(".playerSettings");
     const container = vsPlayer.querySelector(".container");
+
 
     let player1Wins = 0;
     let player2Wins = 0;
@@ -109,7 +109,7 @@
             if (cellA !== "" && cellA === cellB && cellA === cellC) {
                 table.classList.add("disable");
                 cell.forEach(element =>{    
-                    element.classList.remove("first", "second", "third", "grey");
+                    element.classList.remove("grey");
                 });
 
                 let interval = setTimeout(() => {
@@ -148,6 +148,7 @@
 
     function reset(yeh){
         cell.forEach(element =>{
+            element.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
             element.textContent = "";
         });
         table.classList.remove("disable");

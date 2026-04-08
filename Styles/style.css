@@ -1,0 +1,41 @@
+
+
+.vsPlayer{
+    background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 100%);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100vh;
+    width: 100%;
+    border: solid 1px #000;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.vsPlayer .playerSettings{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: solid 1px #000;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.vsPlayer .playerSettings .hide{
+    display: none;
+}
+
+.menu button{
+    width: 100%;
+}
+
+.hide{
+    display: none;
+}
