@@ -5,6 +5,11 @@
     const cell = table.querySelectorAll("td");
     const menu = vsPlayer.querySelector(".menu");
     const playerSettings = vsPlayer.querySelector(".playerSettings");
+    const scoreBoard = vsPlayer.querySelector(".scoreBoard");
+    const player1Score = scoreBoard.querySelector(".score1");
+    const player1ScoreName = scoreBoard.querySelector(".name1");
+    const player2Score = scoreBoard.querySelector(".score2");
+    const player2ScoreName = scoreBoard.querySelector(".name2");
     const container = vsPlayer.querySelector(".container");
 
 
@@ -12,7 +17,7 @@
     let player2Wins = 0;
     let player1name = "";
     let player2name = "";
-
+    let turn = "X";
 
     let counter = 1;
     cell.forEach(element => {
@@ -26,6 +31,14 @@
     let moveIndexPlayer2 = 0;
     let moveQueuePlayer2 = [];
 
+    function hoverEffects(){
+        cell.forEach(element => {
+            if(!element.classList.contains("x-mark") || !element.classList.contains("o-mark") && !table.classList.contains("disable")){
+                element.setAttribute("data-preview", turn);
+            }
+        });
+    }
+
     function setupMoves(name1, name2) {
         const tracker = ["first", "second", "third"];
         cell.forEach((element) => {
@@ -33,10 +46,9 @@
                 if (element.textContent === "" && !table.classList.contains("disable")) {
                     if (isPlayer1Turn) {
                         element.textContent = "X";
-                        // assign class properly
-                        element.classList.remove("first", "second", "third", "grey");
+                        turn = "O";
                         const className = tracker[moveIndexPlayer1 % 3];
-                        element.classList.add(className);
+                        element.classList.add(className, "x-mark");
                         moveIndexPlayer1++;
 
                         moveQueuePlayer1.push(element);
@@ -45,7 +57,7 @@
                         if (moveQueuePlayer1.length > 3) {
                             const removed = moveQueuePlayer1.shift();
                             removed.textContent = "";
-                            removed.classList.remove("first", "second", "third", "grey");
+                            removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
                         }
 
                         // 🔥 always reset greys first
@@ -55,14 +67,16 @@
                         if (moveQueuePlayer1.length === 3) {
                             moveQueuePlayer1[0].classList.add("grey");
                         }
-
+                        hoverEffects();
                         isPlayer1Turn = false;
                     } else {
                         element.textContent = "O";
+                        turn = "O";
+                        element.setAttribute("data-preview", turn);
                         // assign class properly
                         element.classList.remove("first", "second", "third", "grey");
                         const className = tracker[moveIndexPlayer2 % 3];
-                        element.classList.add(className);
+                        element.classList.add(className, "o-mark");
                         moveIndexPlayer2++;
 
                         moveQueuePlayer2.push(element);
@@ -71,7 +85,7 @@
                         if (moveQueuePlayer2.length > 3) {
                             const removed = moveQueuePlayer2.shift();
                             removed.textContent = "";
-                            removed.classList.remove("first", "second", "third", "grey");
+                            removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
                         }
 
                         // 🔥 always reset greys first
@@ -81,7 +95,7 @@
                         if (moveQueuePlayer2.length === 3) {
                             moveQueuePlayer2[0].classList.add("grey");
                         }
-
+                        hoverEffects();
                         isPlayer1Turn = true;
                     }
 
@@ -103,8 +117,13 @@
         for (let combo of winningCombos) {
             
             const cellA = table.querySelector(`.cell${combo[0]}`).textContent;
+            const cellAElement = table.querySelector(`.cell${combo[0]}`);
+
             const cellB = table.querySelector(`.cell${combo[1]}`).textContent;
+            const cellBElement = table.querySelector(`.cell${combo[1]}`);
+
             const cellC = table.querySelector(`.cell${combo[2]}`).textContent;
+            const cellCElement = table.querySelector(`.cell${combo[2]}`);
 
             if (cellA !== "" && cellA === cellB && cellA === cellC) {
                 table.classList.add("disable");
@@ -112,19 +131,28 @@
                     element.classList.remove("grey");
                 });
 
+                cellAElement.style.fontSize = "64px";
+                cellBElement.style.fontSize = "64px";
+                cellCElement.style.fontSize = "64px";
+
                 let interval = setTimeout(() => {
-                    menu.classList.remove("hide");
+                    //menu.classList.remove("hide");
                     menu.querySelector("h1").textContent = `${cellA} Wins!`;
                     
                     if(cellA === "X"){
                         player1Wins++;
+                        player1Score.textContent = player1Wins;
                     }
                     else if(cellA === "O"){
                         player2Wins++;
+                        player2Score.textContent = player2Wins;
                     }
 
-                    scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
-                    
+                    cellAElement.style.fontSize = "";
+                    cellBElement.style.fontSize = "";
+                    cellCElement.style.fontSize = "";
+
+                    reset();
                 }, 2000);
                 return true;
             }
@@ -161,7 +189,6 @@
         if(yeh === "reset"){
             player1Wins = 0;
             player2Wins = 0;
-            scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
             isPlayer1Turn = true;
         }
         else if(yeh === "exit"){
@@ -183,10 +210,11 @@
         playerSettings.classList.add("hide");
         player1name = playerSettings.querySelector("#player1").value;
         player2name = playerSettings.querySelector("#player2").value;
-        console.log(player1name, player2name);
+        player1ScoreName.textContent = `${player1name}:`;
+        player2ScoreName.textContent = `${player2name}:`;
         setupMoves(player1name, player2name);
+        hoverEffects();
         container.classList.remove("hide");
-        scores.textContent = `${player1name}: ${player1Wins} ${player2name}: ${player2Wins}`;
     });
 
     const playerBtn = document.querySelector(".player");

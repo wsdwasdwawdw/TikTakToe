@@ -6,9 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tik Tak Toe</title>
+
     <link rel="stylesheet" href="Styles/Main.css">
     <link rel="stylesheet" href="Styles/Computer.css">
-    <link rel="stylesheet" href="Styles/style.css">
+    <link rel="stylesheet" href="Styles/Player.css">
 </head>
 
 <body>
@@ -21,11 +22,6 @@
     <section class="vsComputer hide">
         <p class="back">←</p>
         <div class="container">
-            <div class="menu hide">
-                <h1></h1>
-                <button class="exit">Exit</button>
-                <button class="continue">Continue</button>
-            </div>
             <h1>Tic Tac Toe</h1>
 
             <div class="scoreBoard">
@@ -65,9 +61,9 @@
         <p class="back">←</p>
         <div class="playerSettings">
             <h1>Player Settings</h1>
-            <label for="player1">Player 1 Name:</label>
+            <label for="player1">Player 1:</label>
             <input type="text" id="player1" name="player1" placeholder="Player 1">
-            <label for="player2">Player 2 Name:</label>
+            <label for="player2">Player 2:</label>
             <input type="text" id="player2" name="player2" placeholder="Player 2">
             <button class="start">Start Game</button>
         </div>
@@ -79,9 +75,19 @@
                 <button class="exit">Exit</button>
                 <button class="continue">Continue</button>
             </div>
-            <div class="scores">
-                <h1></h1>
+            <h1>Tic Tac Toe</h1>
+
+            <div class="scoreBoard">
+                <div class="player1Score">
+                    <span class="name1">:</span>
+                    <span class="score1">0</span>
+                </div>
+                <div class="player2Score">
+                    <span class="name2">:</span>
+                    <span class="score2">0</span>
+                </div>
             </div>
+
             <table>
                 <tr>
                     <td></td>

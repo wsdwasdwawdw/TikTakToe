@@ -3,7 +3,6 @@
     const vsComputer = document.querySelector(".vsComputer");
     const table = vsComputer.querySelector("table");
     const cell = table.querySelectorAll("td");
-    const menu = vsComputer.querySelector(".menu");
     const scoreBoard = vsComputer.querySelector(".scoreBoard");
     const playerScore = scoreBoard.querySelector(".playerScore .score1");
     const computerScore = scoreBoard.querySelector(".computerScore .score2");
@@ -220,8 +219,7 @@
                 cellCElement.style.fontSize = "64px";
 
                 let interval = setTimeout(() => {
-                    //menu.classList.remove("hide");
-                    menu.querySelector("h1").textContent = `${cellA} Wins!`;
+                    
                     
                     if(cellA === "X"){
                         playerWins++;
@@ -251,16 +249,8 @@
 
     //MENU BUTTONS
     const resetBtn = vsComputer.querySelector(".reset");
-    const exitBtn = menu.querySelector(".exit");
-    const continueBtn = menu.querySelector(".continue");
     resetBtn.addEventListener("click", () => {
         reset("reset");
-    });
-    exitBtn.addEventListener("click", () => {
-        reset("exit");
-    });
-    continueBtn.addEventListener("click", () => {
-        reset("continue");
     });
 
     function reset(yeh){
@@ -270,7 +260,7 @@
             element.textContent = "";
         });
         table.classList.remove("disable");
-        menu.classList.add("hide");
+        
         moveIndexPlayer = 0;
         moveQueuePlayer = [];
         moveIndexComputer = 0;
