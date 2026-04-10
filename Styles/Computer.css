@@ -15,12 +15,16 @@
 }
 
 .vsComputer td:hover::before {
-    content: "X";
+    content: attr(data-preview);
     position: absolute;
-    font-size: 64px;
-    opacity: 0.3;
-    pointer-events: none;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    font-size: 64px;
+    transition: opacity 0.2s;
+}
+
+.vsComputer table td:hover::before {
+    opacity: 0.4;
 }

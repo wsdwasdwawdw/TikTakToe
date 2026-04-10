@@ -9,7 +9,7 @@
 
     let playerWins = 0;
     let computerWins = 0;
-    let won = false;
+    let turn = "X";
 
     let counter = 1;
     cell.forEach(element => {
@@ -19,6 +19,16 @@
 
     let moveQueueComputer = [];
     let moveIndexComputer = 0;
+
+    function hoverEffects(){
+        cell.forEach(element => {
+            if(!(element.classList.contains("x-mark") || element.classList.contains("o-mark")) && !table.classList.contains("disable")){
+                element.setAttribute("data-preview", turn);
+            }else if(element.classList.contains("x-mark") || element.classList.contains("o-mark")){
+                element.removeAttribute("data-preview");
+            }
+        });
+    }
 
     // Helper function to get all available moves
     function getAvailableMoves() {
@@ -69,7 +79,7 @@
         if (availableMoves.length === 0) return;
 
         let chosenMove = null;
-
+        turn = "X";
         // 1. Check if computer can win in next move
         for (let move of availableMoves) {
             if (wouldWin(move, "O")) {
@@ -132,6 +142,7 @@
         }
 
         table.classList.remove("disable");
+        hoverEffects();
     }
     let moveQueuePlayer = [];
     let moveIndexPlayer = 0;
@@ -147,7 +158,7 @@
                 if (element.textContent === "") {
 
                     element.textContent = "X";
-
+                    turn = "O";
                     // assign class properly
                     element.classList.remove("first", "second", "third", "grey");
                     const className = tracker[moveIndexPlayer % 3];
@@ -171,6 +182,7 @@
                         moveQueuePlayer[0].classList.add("grey");
                     }
                     table.classList.add("disable");
+                    hoverEffects();
                     if (!checking()) {
                         setTimeout(() => {
                             computerMove();

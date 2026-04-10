@@ -32,8 +32,10 @@
 
     function hoverEffects(){
         cell.forEach(element => {
-            if(!(element.classList.contains("x-mark")) || !(element.classList.contains("o-mark")) && !(table.classList.contains("disable"))){
+            if(!(element.classList.contains("x-mark") || element.classList.contains("o-mark")) && !table.classList.contains("disable")){
                 element.setAttribute("data-preview", turn);
+            }else if(element.classList.contains("x-mark") || element.classList.contains("o-mark")){
+                element.removeAttribute("data-preview");
             }
         });
     }
