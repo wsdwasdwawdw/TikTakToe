@@ -4,8 +4,8 @@
     const table = vsComputer.querySelector("table");
     const cell = table.querySelectorAll("td");
     const scoreBoard = vsComputer.querySelector(".scoreBoard");
-    const playerScore = scoreBoard.querySelector(".playerScore .score1");
-    const computerScore = scoreBoard.querySelector(".computerScore .score2");
+    const playerScore = scoreBoard.querySelector(".score1");
+    const computerScore = scoreBoard.querySelector(".score2");
 
     let playerWins = 0;
     let computerWins = 0;
@@ -17,7 +17,6 @@
         counter++;
     });
 
-    //computerMove();
     let moveQueueComputer = [];
     let moveIndexComputer = 0;
 
@@ -117,17 +116,17 @@
 
         moveQueueComputer.push(cell);
 
-        // 🔥 if 4 moves → remove oldest
+        // if 4 moves → remove oldest
         if (moveQueueComputer.length > 3) {
             const removed = moveQueueComputer.shift();
             removed.textContent = "";
             removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
         }
 
-        // 🔥 always reset greys first
+        // always reset greys first
         moveQueueComputer.forEach(cell => cell.classList.remove("grey"));
 
-        // 🔥 if exactly 3 → grey the oldest
+        // if exactly 3 → grey the oldest
         if (moveQueueComputer.length === 3) {
             moveQueueComputer[0].classList.add("grey");
         }
@@ -157,17 +156,17 @@
 
                     moveQueuePlayer.push(element);
 
-                    // 🔥 if 4 moves → remove oldest
+                    // if 4 moves → remove oldest
                     if (moveQueuePlayer.length > 3) {
                         const removed = moveQueuePlayer.shift();
                         removed.textContent = "";
                         removed.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
                     }
 
-                    // 🔥 always reset greys first
+                    // always reset greys first
                     moveQueuePlayer.forEach(cell => cell.classList.remove("grey"));
 
-                    // 🔥 if exactly 3 → grey the oldest
+                    // if exactly 3 → grey the oldest
                     if (moveQueuePlayer.length === 3) {
                         moveQueuePlayer[0].classList.add("grey");
                     }
@@ -214,6 +213,7 @@
                     element.classList.remove("grey");
                 });
 
+                // make winning cells bigger
                 cellAElement.style.fontSize = "64px";
                 cellBElement.style.fontSize = "64px";
                 cellCElement.style.fontSize = "64px";
@@ -230,8 +230,7 @@
                         computerScore.textContent = computerWins;
                     }
 
-                    scores.textContent = `Player: ${playerWins} Computer: ${computerWins}`;
-
+                    // reset font size
                     cellAElement.style.fontSize = "";
                     cellBElement.style.fontSize = "";
                     cellCElement.style.fontSize = "";
@@ -254,7 +253,6 @@
     });
 
     function reset(yeh){
-        const scores = document.querySelector(".scores h1");
         cell.forEach(element =>{
             element.classList.remove("first", "second", "third", "grey", "x-mark", "o-mark");
             element.textContent = "";

@@ -3,7 +3,6 @@
     const vsPlayer = document.querySelector(".vsPlayer");
     const table = vsPlayer.querySelector("table");
     const cell = table.querySelectorAll("td");
-    const menu = vsPlayer.querySelector(".menu");
     const playerSettings = vsPlayer.querySelector(".playerSettings");
     const scoreBoard = vsPlayer.querySelector(".scoreBoard");
     const player1Score = scoreBoard.querySelector(".score1");
@@ -33,7 +32,7 @@
 
     function hoverEffects(){
         cell.forEach(element => {
-            if(!element.classList.contains("x-mark") || !element.classList.contains("o-mark") && !table.classList.contains("disable")){
+            if(!(element.classList.contains("x-mark")) || !(element.classList.contains("o-mark")) && !(table.classList.contains("disable"))){
                 element.setAttribute("data-preview", turn);
             }
         });
@@ -71,8 +70,7 @@
                         isPlayer1Turn = false;
                     } else {
                         element.textContent = "O";
-                        turn = "O";
-                        element.setAttribute("data-preview", turn);
+                        turn = "X";
                         // assign class properly
                         element.classList.remove("first", "second", "third", "grey");
                         const className = tracker[moveIndexPlayer2 % 3];
@@ -136,8 +134,6 @@
                 cellCElement.style.fontSize = "64px";
 
                 let interval = setTimeout(() => {
-                    //menu.classList.remove("hide");
-                    menu.querySelector("h1").textContent = `${cellA} Wins!`;
                     
                     if(cellA === "X"){
                         player1Wins++;
@@ -160,19 +156,6 @@
         return false; 
     }
 
-    //MENU BUTTONS
-    const resetBtn = menu.querySelector(".reset");
-    const exitBtn = menu.querySelector(".exit");
-    const continueBtn = menu.querySelector(".continue");
-    resetBtn.addEventListener("click", () => {
-        reset("reset");
-    });
-    exitBtn.addEventListener("click", () => {
-        reset("exit");
-    });
-    continueBtn.addEventListener("click", () => {
-        reset();
-    });
 
     function reset(yeh){
         cell.forEach(element =>{
@@ -180,7 +163,6 @@
             element.textContent = "";
         });
         table.classList.remove("disable");
-        menu.classList.add("hide");
         moveIndexPlayer1 = 0;
         moveQueuePlayer1 = [];
         moveIndexPlayer2 = 0;
