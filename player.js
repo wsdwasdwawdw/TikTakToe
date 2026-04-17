@@ -150,6 +150,9 @@
                     cellBElement.style.fontSize = "";
                     cellCElement.style.fontSize = "";
 
+                    cell.forEach(element =>{
+                        element.setAttribute("data-preview", turn);
+                    });
                     reset();
                 }, 2000);
                 return true;
@@ -173,12 +176,16 @@
         if(yeh === "reset"){
             player1Wins = 0;
             player2Wins = 0;
+            player1Score.innerHTML = "0";
+            player2Score.innerHTML = "0";
             isPlayer1Turn = true;
         }
         else if(yeh === "exit"){
             isPlayer1Turn = true;
             player1Wins = 0;
             player2Wins = 0;
+            player1Score.innerHTML = "0";
+            player2Score.innerHTML = "0";
             playerSettings.classList.remove("hide");
             vsPlayer.classList.add("hide");
             mainMenu.classList.remove("hide");
@@ -211,4 +218,9 @@
     backBtn.addEventListener("click", ()=>{
         reset("exit");
      });
+
+    const resetBtn = vsPlayer.querySelector(".reset");
+    resetBtn.addEventListener("click", () => {
+        reset("reset");
+    });
 })();
