@@ -9,7 +9,6 @@
 
     let playerWins = 0;
     let computerWins = 0;
-    let turn = "X";
 
     let counter = 1;
     cell.forEach(element => {
@@ -23,7 +22,7 @@
     function hoverEffects(){
         cell.forEach(element => {
             if(!(element.classList.contains("x-mark") || element.classList.contains("o-mark")) && !table.classList.contains("disable")){
-                element.setAttribute("data-preview", turn);
+                element.setAttribute("data-preview", "X");
             }else if(element.classList.contains("x-mark") || element.classList.contains("o-mark")){
                 element.removeAttribute("data-preview");
             }
@@ -158,7 +157,6 @@
                 if (element.textContent === "") {
 
                     element.textContent = "X";
-                    turn = "O";
                     // assign class properly
                     element.classList.remove("first", "second", "third", "grey");
                     const className = tracker[moveIndexPlayer % 3];
@@ -248,6 +246,11 @@
                     cellCElement.style.fontSize = "";
                     console.log(playerWins, computerWins);
                     won = true;
+
+                    cell.forEach(element =>{
+                        element.setAttribute("data-preview", turn);
+                    });
+
                     reset();
                 }, 2000);
                 return true;
@@ -295,25 +298,12 @@
     const computerBtn = document.querySelector(".computer");
     computerBtn.addEventListener("click", ()=>{
         vsComputer.classList.remove("hide");
+        hoverEffects();
         mainMenu.classList.add("hide");
-        //hoverEvents();
     });
         
     const backBtn = vsComputer.querySelector(".back");
     backBtn.addEventListener("click", ()=>{
         reset("exit");
      });
-
-    function hoverEvents(){
-        cell.forEach(element => {
-            element.setAttribute("data-preview", "O");
-            element.addEventListener("mouseenter", () => {
-                element.classList.add("hover-preview");
-            });
-
-            element.addEventListener("mouseleave", () => {
-                element.classList.remove("hover-preview");
-            });
-        });
-    }
 })();
