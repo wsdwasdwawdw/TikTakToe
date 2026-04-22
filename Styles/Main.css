@@ -87,11 +87,9 @@ td:hover{
     display: none;
 }
 
-.grey {
-    color: lightgray;
-    opacity: 0.6;
+table tr td.grey {
+    color: rgb(241, 10, 10);
 }
-
 .disable{
     pointer-events: none;
     cursor: not-allowed;
