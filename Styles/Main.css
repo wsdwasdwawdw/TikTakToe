@@ -22,6 +22,7 @@ body{
     height: 100vh;
     margin: 0;
     overflow: hidden;
+    text-align: center;
 }
 section{
     position: relative;
@@ -31,8 +32,8 @@ section{
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border);
     border-radius: 20px;
-    width: 300px;
-    height: 300px;
+    width: 40%;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,13 +44,14 @@ section{
 }
 button{
     background: transparent;
-    padding: 10px 20px;
+    padding: 1vw 2vw;
     border: 1px solid var(--cyan-glow);
     border-radius: 10px;
     color: var(--cyan-glow); 
     text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); 
     cursor: pointer;
     transition: all 0.2s ease;
+    font-size: 2vw;
     font-weight: 600;
 }
 button:hover{
@@ -130,7 +132,8 @@ table tr td.grey {
     padding: 40px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 360px;
+    width: 20vw;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,7 +141,7 @@ table tr td.grey {
     gap: 20px;
 }
 h1 {
-    font-size: 1.8rem;
+    font-size: 3vw;
     letter-spacing: 2px;
     margin-bottom: 30px;
     text-transform: uppercase;
