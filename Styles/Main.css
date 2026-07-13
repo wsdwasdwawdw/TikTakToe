@@ -1,4 +1,4 @@
-:root {
+:root[data-theme='default'] {
     --bg-dark: #0b0e14;
     --glass: rgba(30, 41, 59, 0.7);
     --cyan-glow: #00f2ff;
@@ -178,3 +178,5 @@ h1 {
 
 .x-mark { color: var(--cyan-glow); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
 .o-mark { color: var(--solar-orange); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
+
+
