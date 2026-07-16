@@ -99,6 +99,7 @@ td:hover{
 
 table tr td.grey {
     color: rgb(241, 10, 10);
+    text-shadow: 0 0 10px rgb(241, 10, 10);
 }
 .disable{
     pointer-events: none;
@@ -184,12 +185,12 @@ h1 {
     color: var(--player2);
 }
 
-.x-mark { color: var(--player1); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
-.o-mark { color: var(--player2); text-shadow: 0 0 10px rgba(255, 184, 0, 0.5); }
+.x-mark { color: var(--player1); text-shadow: 0 0 10px var(--player1); }
+.o-mark { color: var(--player2); text-shadow: 0 0 10px var(--player2); }
 
 .themeSelector{
     position: absolute;
-    right: 0px;
+    right: -300px;
     height: 100%;
     width: 300px;
     background: var(--glass);
@@ -225,4 +226,14 @@ h1 {
     background: var(--player1);
     color: #0b0e14;
     border-color: var(--player1);
+}
+
+.themeSelector::before{
+    content: '<<';
+    position: absolute;
+    left: -42px;
+    background: var(--glass);
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
 }

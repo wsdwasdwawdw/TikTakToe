@@ -33,7 +33,7 @@
 }
 .vsPlayer .playerSettings input{
     padding: 10px 20px;
-    border: solid 1px var(--cyan-glow);
+    border: solid 1px var(--player1);
     border-radius: 20px;
     background: transparent;
     font-size: 2vw;
@@ -50,11 +50,11 @@
     display: none;
 }
 .vsPlayer .scoreBoard .player1Score span{
-    color: var(--cyan-glow);
+    color: var(--player1);
     font-weight: 600;
 }
 .vsPlayer .scoreBoard .player2Score span{
-    color: var(--solar-orange);
+    color: var(--player2);
     font-weight: 600;
 }
 
