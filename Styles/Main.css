@@ -194,6 +194,7 @@ h1 {
     height: 100%;
     width: 300px;
     background: var(--glass);
+    transition: all 0.3s ease;
 }
 .themeSelector h1{
     font-size: 2vw;
@@ -227,13 +228,11 @@ h1 {
     color: #0b0e14;
     border-color: var(--player1);
 }
-
-.themeSelector::before{
-    content: '<<';
+.themeSelector .themeToggle{
     position: absolute;
-    left: -42px;
-    background: var(--glass);
     padding: 10px;
-    font-weight: 600;
+    background: var(--glass);
+    left: -47px;
+    font-size: 30px;
     cursor: pointer;
 }

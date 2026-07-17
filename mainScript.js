@@ -1,11 +1,12 @@
 (() => {
-    const themeToggle = document.querySelector(".themeSelector");
-    const themes = themeToggle.querySelector(".themes");
+    const themeSelector = document.querySelector(".themeSelector");
+    const themeToggle = themeSelector.querySelector(".themeToggle");
+    const themes = themeSelector.querySelector(".themes");
     const btns = themes.querySelectorAll("button");
 
     const savedTheme = localStorage.getItem("data-theme") || "default";
 
-    function themeSelector(){
+    function themeSelectorFunc(){
         document.documentElement.setAttribute("data-theme", savedTheme);
         localStorage.setItem("data-theme", savedTheme);
         btns.forEach((btn) => {
@@ -17,7 +18,7 @@
         });
     }
 
-    themeSelector();
+    themeSelectorFunc();
 
     btns.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -30,4 +31,13 @@
         }); 
     });
 
+    themeToggle.addEventListener("click", ()=>{
+        if(themeSelector.classList.contains("visible")){
+            themeSelector.style.right = "-300px";
+        }
+        else{
+            themeSelector.style.right = "0px";
+        }
+        themeSelector.classList.toggle("visible");
+    });
 })();
