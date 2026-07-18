@@ -25,9 +25,9 @@
             const selectedTheme = btn.getAttribute("data-theme");
             document.documentElement.setAttribute("data-theme", selectedTheme);
             localStorage.setItem("data-theme", selectedTheme);
-
+            btns.forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
             
-            btns.forEach((b) => b.classList.toggle("selected"));
         }); 
     });
 
