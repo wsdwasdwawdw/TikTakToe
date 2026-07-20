@@ -210,23 +210,13 @@ h1 {
 .themeSelector .themes button{
     width: 80%;
     padding: 10px;
-    border: solid 1px var(--border);
+    border: none;
     border-radius: 20px;
-    background: transparent;
-    color: var(--text-main);
     font-size: 2vw;
 }
-.themeSelector .themes button:hover{
-    background: var(--player1);
-    color: #0b0e14;
-    border-color: var(--player1);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-    transform: translateY(-2px);
-}
-.themeSelector .themes button.selected{
-    background: var(--player1);
-    color: #0b0e14;
-    border-color: var(--player1);
+.themeSelector .themes button.selected,.themeSelector .themes button:hover{
+    outline: solid 2px #fff;
+    outline-offset: 4px;
 }
 .themeSelector .themeToggle{
     position: absolute;
@@ -235,4 +225,8 @@ h1 {
     left: -47px;
     font-size: 30px;
     cursor: pointer;
+}
+.themeSelector .themes .default-theme{
+    background: linear-gradient(to right,#0b0e14, #00f2ff, #ffb800, #f8fafc);
+    color: #000;
 }
