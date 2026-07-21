@@ -230,3 +230,7 @@ h1 {
     background: linear-gradient(to right,#0b0e14, #00f2ff, #ffb800, #f8fafc);
     color: #000;
 }
+.themeSelector .themes .neon-theme{
+    background: linear-gradient(to right,#000, #08CB00, #9eff95, #EEEEEE);
+    color: #000;
+}
