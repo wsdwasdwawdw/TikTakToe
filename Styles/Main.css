@@ -1,6 +1,6 @@
 :root[data-theme='default'] {
-    --bg-main: #0b0e14;
-    --glass: rgba(30, 41, 59, 0.7);
+    --bg-main: #121927;
+    --glass: rgb(30, 42, 59, 0.7);
     --player1: #00f2ff;
     --player2: #ffb800;
     --text-main: #f8fafc;
@@ -19,7 +19,7 @@
     --bg-main: #f8fafc;
     --glass: rgba(255, 255, 255, 0.7);
     --player1: #000;
-    --player2: #494949;
+    --player2: #646464;
     --text-main: #0b0e14;
     --border: rgba(0, 0, 0, 0.1);
 }
@@ -46,7 +46,7 @@ section{
 }
 
 .mainMenu{
-    background: var(--bg-main);
+    background: var(--glass);
     border: 1px solid var(--border);
     border-radius: 20px;
     width: 40%;
@@ -65,7 +65,7 @@ button{
     border: 1px solid var(--player1);
     border-radius: 10px;
     color: var(--player1); 
-    text-shadow: 0 0 10px var(--text-main); 
+    text-shadow: 0 0 5px var(--text-main); 
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 2vw;
@@ -73,7 +73,7 @@ button{
 }
 button:hover{
     background: var(--player1);
-    color: #0b0e14;
+    color: var(--bg-main);
     border-color: var(--player1);
     box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
     transform: translateY(-2px);
@@ -222,6 +222,8 @@ h1 {
     border: none;
     border-radius: 20px;
     font-size: 2vw;
+    color: #fff;
+    text-shadow: 0 0 5px #000;
 }
 .themeSelector .themes button.selected,.themeSelector .themes button:hover{
     outline: solid 2px #fff;
@@ -237,9 +239,10 @@ h1 {
 }
 .themeSelector .themes .default-theme{
     background: linear-gradient(to right,#0b0e14, #00f2ff, #ffb800, #f8fafc);
-    color: #000;
 }
 .themeSelector .themes .neon-theme{
     background: linear-gradient(to right,#000, #08CB00, #9eff95, #EEEEEE);
-    color: #000;
+}
+.themeSelector .themes .light-theme{
+    background: linear-gradient(to right,#f8fafc, #000, #494949, #0b0e14);
 }
